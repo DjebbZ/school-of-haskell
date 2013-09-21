@@ -74,4 +74,25 @@ sumPair :: (Int, Int) -> Int
 sumPair (x,y) = x + y
 
 --main = print (sumPair(3,4))
-main = print ("sumPair(3,4) = " ++ show (sumPair (3,4))) -- Improvised this one
+--main = print ("sumPair(3,4) = " ++ show (sumPair (3,4))) -- Improvised this one
+
+
+
+-- ----------------------
+-- Constructing Lists
+-- ----------------------
+
+emptyList = []
+a = 1:[] -- : is called the "cons" operator
+b = 2:(1:[]) -- [2,1]
+c = [2,3,4] == 2:3:4:[] -- True, left side is syntactic sugar of right side
+
+--main = print b
+
+-- reusing the hailstone function from above
+-- list constructed using ":" and recursion
+hailstoneSeq :: Integer -> [Integer]
+hailstoneSeq 1 = [1]
+hailstoneSeq n = n : hailstoneSeq (hailstone n)
+
+main = print (hailstoneSeq 5) -- [5,16,8,4,2,1]
