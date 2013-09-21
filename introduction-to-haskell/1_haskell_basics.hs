@@ -59,4 +59,19 @@ isEven n
 isEven' :: Integer -> Bool
 isEven' n = n `mod` 2 == 0
 
-main = print [isEven 2, isEven' 5]
+--main = print [isEven 2, isEven' 5]
+
+
+
+-- ----------------------
+-- Pairs
+-- ----------------------
+
+p :: (Int, Char)
+p = (3, 'x')
+
+sumPair :: (Int, Int) -> Int
+sumPair (x,y) = x + y
+
+--main = print (sumPair(3,4))
+main = print ("sumPair(3,4) = " ++ show (sumPair (3,4))) -- Improvised this one
