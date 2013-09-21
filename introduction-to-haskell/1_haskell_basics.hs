@@ -95,4 +95,25 @@ hailstoneSeq :: Integer -> [Integer]
 hailstoneSeq 1 = [1]
 hailstoneSeq n = n : hailstoneSeq (hailstone n)
 
-main = print (hailstoneSeq 5) -- [5,16,8,4,2,1]
+--main = print (hailstoneSeq 5) -- [5,16,8,4,2,1]
+
+
+
+-- ----------------------
+-- Functions on Lists
+-- ----------------------
+
+-- compute the length of list of Integers
+intLisLength :: [Integer] -> Integer
+intLisLength []     = 0
+--intLisLength (x:xs) = 1 + intLisLength xs -- x is useless here
+intLisLength (_:xs) = 1 + intLisLength xs -- so it's replaced by _
+
+--main = print (intLisLength [1,2,3,4,5,6,7,8,9]) -- 9
+
+sumEveryTwo :: [Integer] -> [Integer]
+sumEveryTwo []          = []
+sumEveryTwo (x:[])      = []
+sumEveryTwo (x:y:zs)    = (x + y) : sumEveryTwo zs
+
+main = print (sumEveryTwo [1,2,3,4,5]) -- [3,7]
