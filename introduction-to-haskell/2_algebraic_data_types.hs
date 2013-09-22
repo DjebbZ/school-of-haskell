@@ -87,7 +87,7 @@ stan = Person "Stan" 94 Cabbage
 getAge :: Person -> Int
 getAge (Person _ a _) = a
 
-main = print (getAge brent) -- 30
+--main = print (getAge brent) -- 30
 
 
 
@@ -98,7 +98,16 @@ main = print (getAge brent) -- 30
 -- the type AlgDataType can be constructed in one of four ways
 -- type Constructor (= AlgDataType) and data Constructure (= ConstrX)
 --  ... always start with a capital letter. Variables with lowercase letter.
-data AlgDataType = Constr1 Type11 Type12
-                 | Constr2 Type21
-                 | Constr3 Type31 Type32 Type33
-                 | Constr4
+--data AlgDataType = Constr1 Type11 Type12
+--                 | Constr2 Type21
+--                 | Constr3 Type31 Type32 Type33
+--                 | Constr4
+
+watsYourName :: Person -> String
+watsYourName p@(Person n _ _ ) = "The name field of (" ++ show p ++ ") is " ++ n
+-- x@pat to retain the whole pattern in a variable
+
+--main = putStrLn (watsYourName brent) -- The name field of (Person "Brent" 30 SealingWax) is Brent
+-- putStrLn instead of print because it's already a string
+main = print (watsYourName brent) -- "The name field of (Person \"Brent\" 30 SealingWax) is Brent"
+-- wraps result in double quotes, so it escape the quotes already present
