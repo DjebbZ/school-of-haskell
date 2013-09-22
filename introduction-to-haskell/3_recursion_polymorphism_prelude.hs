@@ -112,4 +112,58 @@ mapList :: (a -> b) -> List a -> List b
 mapList _ E         = E
 mapList f (C x xs)  = C (f x) (mapList f xs)
 
-main = print (mapList (*2) myList) -- C 4 (C (-6) (C 10 E))
+--main = print (mapList (*2) myList) -- C 4 (C (-6) (C 10 E))
+
+
+
+-- ----------------------
+-- Total and Partial Functions
+-- ----------------------
+
+-- Partial functions are functions that crashes for certain inputs. BAD !
+-- Total functions are functions that works for ALL possible inputs. GOOD !
+
+-- core head, tail, init, last and !! are partial : they crash on empty lists
+
+-- One solution : wrap the result type as a Maybe type
+-- reminder : data Maybe a = Nothing | Just a
+--data Maybe a = Nothing | Just a
+
+-- Important here : as `head` crashes because empty lists have no type,
+--  ... we need create a "typed" empty list
+emptyStringList = [] :: [String]
+
+safeHead :: [a] -> Maybe a
+safeHead [] = Nothing
+safeHead (x:_) = Just x
+
+main = print (safeHead emptyStringList, safeHead ["Hello"])
+
+-- Other solution : when we KNOW that empty lists won't be passed,
+--  ... then the types ought to reflect that guarantee !
+
+data NonEmptyList a = NEL a [a] deriving Show
+
+nelToList :: NonEmptyList a -> [a]
+nelToList (NEL x xs) = x:xs
+
+--main = print (nelToList (NEL 1 []) -- [1]
+--main = print (nelToList (NEL 1 [1]) -- [1,1]
+
+listToNEL :: [a] -> Maybe (NonEmptyList a)
+listToNEL [] = Nothing
+listToNEL (x:xs) = Just (NEL x xs)
+
+--main = print (listToNEL []) -- Nothing
+--main = print (listToNEL [1,2]) -- Just (NEL 1 [2])
+
+headNEL :: NonEmptyList a -> a
+headNEL (NEL x _) = x
+
+main = print headNEL (NEL 1 [2]) -- 1
+main = print headNEL (NEL 1 [2,3,4,5,6]) -- 1
+main = print headNEL (NEL [1] [[2], [3]]) -- [1]
+main = print headNEL (listToNEL [1,2]) -- Error : listToNEL [a] wraps the result as a Maybe type, so signatures don't match
+
+tailNEL :: NonEmptyList a -> [a]
+tailNEL (NEL _ xs) = xs
