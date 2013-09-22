@@ -57,7 +57,7 @@ filterPos (Cons x xs)
     | x > 0         = Cons x (filterPos xs)
     | otherwise    = filterPos xs
 
-main = print (filterPos myIntList) -- Cons 2 (Cons 5 Empty)
+--main = print (filterPos myIntList) -- Cons 2 (Cons 5 Empty)
 
 -- The changing part is the predicate that test each element
 
@@ -67,4 +67,49 @@ filterIntList p (Cons x xs)
     | p x = Cons x (filterIntList p xs)
     | otherwise = filterIntList p xs
 
-main = print (filterIntList (>0) myIntList)
+--main = print (filterIntList (>0) myIntList)
+
+
+
+-- ----------------------
+-- Polymorphism
+-- ----------------------
+
+-- Problem with previous examples : works only for lists of Int.
+-- For lists of Integer, String, Bool, whatever, we would need to make
+--  ... a new data type and reimplement similar functions where only their type signature would differ.
+-- Enter polymorphism.
+
+
+-- Polymorphic data types
+
+-- t is a type variable. This construct can be a list of any type
+data List t = E | C t (List t) deriving Show
+
+lst1 :: List Int
+lst1 = C 1 (C 2 (C 3 E))
+
+lst2 :: List Char
+lst2 = C 'a' (C 'b' (C 'c' E))
+
+lst3 :: List Bool
+lst3 = C True (C False E)
+
+-- Polymorphic functions
+
+filterList :: (t -> Bool) -> List t -> List t
+filterList _ E = E
+filterList p (C x xs)
+    | p x       = C x (filterList p xs)
+    | otherwise = filterList p xs
+
+myList = C 2 (C (-3) (C 5 E))
+
+--main = print (filterList even myList) -- C 2 E
+
+-- Using different a and b type variables because we may want to return different types than the one use on input
+mapList :: (a -> b) -> List a -> List b
+mapList _ E         = E
+mapList f (C x xs)  = C (f x) (mapList f xs)
+
+main = print (mapList (*2) myList) -- C 4 (C (-6) (C 10 E))
