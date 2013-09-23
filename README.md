@@ -1,14 +1,14 @@
 School of Haskell
 =================
 
-Basically following at my own pace nd willingness the Haskell lessons from [School of Haskell](https://www.fpcomplete.com/school).
+Basically following at my own pace and willingness the Haskell lessons from [School of Haskell](https://www.fpcomplete.com/school).
 
 Usage
 -----
 
 1. Install the [Haskell Platform](http://www.haskell.org/platform/)
 2. Clone this repo and `cd` into it
-3. Compile code with `ghc` or launch the REPL with `ghci` then load a code file with `:l [path/to/file.hs]`
+3. Compile code with `ghc [path/to/file.hs]` or launch the REPL with `ghci` then load a code file with `:l [path/to/file.hs]`
 
 License
 -------
