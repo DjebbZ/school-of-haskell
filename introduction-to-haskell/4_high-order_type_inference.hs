@@ -75,7 +75,36 @@ foobar (x:xs)
 foobar' :: [Integer] -> Integer
 foobar' = sum . map (\x -> 7*x + 2) . filter (>3)
 
-main = print (foobar' [1,2,3,4,5]) -- 67
+--main = print (foobar' [1,2,3,4,5]) -- 67
 
 -- Not specifying functions arguments, aka defining what a function is, is "point-free" style
 
+
+
+-- ----------------------
+-- Folds
+-- ----------------------
+
+-- fold functions somehow "combine" all elements of a list into one final answer
+sum' :: [Integer] -> Integer
+sum' []     = 0
+sum' (x:xs) = x + sum' xs
+
+product' :: [Integer] -> Integer
+product' []     = 1
+product' (x:xs) = x * product' xs
+
+length' :: [a] -> Int
+length' []      = 0
+length' (_:xs)  = 1 + length' xs
+
+-- abstracting the common parts and the different parts into one function :
+fold :: (a -> b -> b) -> b -> [a] -> b
+fold f z []     = z
+fold f z (x:xs) = f x (fold f z xs)
+
+-- rewriting sum', product' and length' with fold
+sum'' :: [Integer] -> Integer
+sum'' = fold 0 (+)
+
+main = print (sum'' [1,2,3,4])
